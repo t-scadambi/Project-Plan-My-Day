@@ -30,22 +30,27 @@ public class RenderData implements TextClassifierHelper.ClassifierListener {
     public RenderData(JSONObject data, Context context){
         this.data = data;
         this.context = context;
-        this.textClassifierHelper = new TextClassifierHelper(
-                context,this
-        );
+
     }
     public List<TaskPlanner> renderTaskInfo(){
         List<TaskPlanner> datalist = new ArrayList<>();
+        List<String> taskTitles = new ArrayList<>();
         try{
             String dataType = data.getString("@odata.context");
             Log.d(TAG, String.valueOf(dataType.equals(events)));
             JSONArray jsonArray = data.getJSONArray("value");
             if(dataType.equals(plannerTask)){
-
+                textClassifierHelper = new TextClassifierHelper(
+                        context,this
+                );
+                Log.d(TAG,"check");
+                for(int i=0;i<jsonArray.length();i++){
+                    JSONObject dataObj = jsonArray.getJSONObject(i);
+                    taskTitles.add(dataObj.getString("title"));
+                }
                 synchronized (this){
                     predicitonFinished = false;
-//                    textClassifierHelper.classify();
-
+                    textClassifierHelper.classify(taskTitles);
                     while(!predicitonFinished){
                         try{
                             wait();
@@ -58,14 +63,14 @@ public class RenderData implements TextClassifierHelper.ClassifierListener {
                 for(int i=0;i<jsonArray.length();i++){
                     JSONObject dataObj = jsonArray.getJSONObject(i);
                     TaskPlanner taskData = new TaskPlanner(dataObj.getString("id") , dataObj.getString("title")
-                            ,false,dataObj.getString("dueDateTime"), dataObj.getInt("priority"));
+                            ,taskLabels.get(i),dataObj.getString("dueDateTime"), dataObj.getInt("priority"));
                     datalist.add(taskData);
                 }
 
             }
 
         }catch (Exception e){
-            Log.d(TAG, "displayGraphResult: No value");
+            e.printStackTrace();
         }
         return datalist;
     }
@@ -95,16 +100,24 @@ public class RenderData implements TextClassifierHelper.ClassifierListener {
 
     @Override
     public void onError(@NonNull String error) {
-
+        textClassifierHelper.close();
     }
 
     @Override
     public void onResults(@Nullable List<Float> results, long inferenceTime) {
-
+        textClassifierHelper.close();
+        taskLabels.clear();
+        for(int i=0;i<results.size();i++){
+            if(results.get(i)>0.5) taskLabels.add(true);
+            else taskLabels.add(false);
+        }
+        Log.d(TAG, results.toString());
+        predicitonFinished = true;
+        notifyAll();
     }
 
     @Override
     public void onLossResults(float lossNumber) {
-
+        textClassifierHelper.close();
     }
 }

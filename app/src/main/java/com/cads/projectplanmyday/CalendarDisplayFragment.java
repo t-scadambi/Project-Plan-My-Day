@@ -1,64 +1,98 @@
 package com.cads.projectplanmyday;
 
+import android.os.Build;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link CalendarDisplayFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import com.cads.projectplanmyday.databinding.FragmentCalendarDisplayBinding;
+
+import org.json.JSONObject;
+
+import java.util.List;
+
+
+@RequiresApi(api = Build.VERSION_CODES.O)
 public class CalendarDisplayFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    String TAG = CalendarDisplayFragment.class.getSimpleName();
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    public CalendarDisplayFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment CalendarDisplayFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static CalendarDisplayFragment newInstance(String param1, String param2) {
-        CalendarDisplayFragment fragment = new CalendarDisplayFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
-
+    RecyclerView recyclerView;
+    CalendarResponseAdapter adapter;
+    Button nextbtn2;
+    ActivityViewModel viewModel;
+    FragmentCalendarDisplayBinding binding;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_calendar_display, container, false);
+        binding= FragmentCalendarDisplayBinding.inflate(inflater,container,false);
+        viewModel = new ViewModelProvider(requireActivity())
+                .get(ActivityViewModel.class);
+        adapter = new CalendarResponseAdapter(viewModel.getEvents());
+        initializeUI(binding);
+        return binding.getRoot();
     }
+
+    private void initializeUI(@NonNull final FragmentCalendarDisplayBinding binding) {
+        nextbtn2 = binding.nextbtn2;
+        recyclerView = binding.rvCalendar;
+        recyclerView.setAdapter(adapter);
+        nextbtn2.setOnClickListener(v->{
+            feedOpenAIContent();
+        });
+    }
+    private void feedOpenAIContent() {
+        OpenAIHelper openAIHelper = new OpenAIHelper();
+        List<TaskPlanner> tasksList = viewModel.getTasks();
+        List<CalendarEvent> eventsList =viewModel.getEvents();
+        String userContent = openAIHelper.formatUserContent(tasksList,eventsList);
+        openAIHelper.getResponse(requireActivity().getApplicationContext(),
+                response -> {
+                    /* Successfully called graph, process data and send to UI */
+                    Log.d(TAG, "Response: " + response.toString());
+                    displayResult(response);
+                },
+                error -> {
+                    Log.d(TAG,"error: "+error.toString());
+                    displayError(error);
+                },userContent);
+    }
+    private void displayResult(JSONObject response) {
+        String responseString ;
+        try{
+            responseString = response.getJSONArray("choices")
+                    .getJSONObject(0).getString("text");
+            try {
+                // Remove the trailing characters
+                int endIndex = responseString.lastIndexOf("```");
+                String jsonStr = responseString.substring(0, endIndex);
+
+                // Extract the JSON object from the response string
+                JSONObject jsonObject = new JSONObject(jsonStr);
+
+            }catch(Exception e){
+                responseString = "error in parsing invalid json object";
+            }
+        }catch (Exception e){
+            responseString = e.toString();
+        }
+        viewModel.setOpenAIData(responseString);
+
+    }
+
+    private void displayError(Exception error) {
+        viewModel.setOpenAIData(error.toString());
+    }
+
 }

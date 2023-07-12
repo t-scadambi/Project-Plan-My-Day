@@ -8,6 +8,7 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -22,7 +23,9 @@ import com.cads.projectplanmyday.databinding.FragmentHomepageBinding;
 import com.microsoft.identity.client.AuthenticationCallback;
 import com.microsoft.identity.client.IAccount;
 import com.microsoft.identity.client.IAuthenticationResult;
+import com.microsoft.identity.client.IPublicClientApplication;
 import com.microsoft.identity.client.ISingleAccountPublicClientApplication;
+import com.microsoft.identity.client.PublicClientApplication;
 import com.microsoft.identity.client.SilentAuthenticationCallback;
 import com.microsoft.identity.client.exception.MsalClientException;
 import com.microsoft.identity.client.exception.MsalException;
@@ -57,6 +60,24 @@ public class HomepageFragment extends Fragment {
         // Inflate the layout for this fragment
         binding = FragmentHomepageBinding.inflate(inflater,container,false);
         initializeUI(binding);
+        msGraphRepository = new MSGraphRepository();
+        PublicClientApplication.createSingleAccountPublicClientApplication(getContext(),
+                R.raw.auth_config_single_account,
+                new IPublicClientApplication.ISingleAccountApplicationCreatedListener() {
+                    @Override
+                    public void onCreated(ISingleAccountPublicClientApplication application) {
+                        mSingleAccountApp = application;
+                        viewModel.setSingleAccountApp(mSingleAccountApp);
+                        loadAccount();
+                    }
+
+                    @Override
+                    public void onError(MsalException exception) {
+                        displayError(exception);
+                    }
+                }
+
+        );
         return binding.getRoot();
     }
     private void initializeUI(@NonNull final FragmentHomepageBinding binding) {
@@ -233,6 +254,7 @@ public class HomepageFragment extends Fragment {
         List<TaskPlanner> datalist =graphData.renderTaskInfo();
         viewModel.setTaskResponses(datalist);
         // TODO navigate to calendar events
+        Navigation.findNavController(getView()).navigate(R.id.action_homepageFragment_to_taskDisplayFragment);
     }
 
     private void displayError(@NonNull final Exception exception) {

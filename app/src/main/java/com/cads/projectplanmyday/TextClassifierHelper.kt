@@ -35,6 +35,7 @@ class TextClassifierHelper(private val context: Context, private val classifierL
     private var wordIndexMap :Map<String,Int>? = null
     init {
         if (setupModelPersonalization()) {
+            wordIndexMap = readWordIndexMappingFromAssets(context ,"tokenizer.json")
             maxlen = interpreter!!.getInputTensor(0).shape()[1]
 //            Log.d(TAG, interpreter!!.getInputTensorFromSignature("x","train").numBytes().toString())
         } else {
@@ -80,7 +81,6 @@ class TextClassifierHelper(private val context: Context, private val classifierL
     fun addTasks(trainingData: List<TaskPlanner>){
         mappedSentences.clear()
         labels.clear()
-        wordIndexMap = readWordIndexMappingFromAssets(context ,"tokenizer.json")
         val sentences :MutableList<String> = mutableListOf()
         for(todoTask in trainingData){
             sentences.add(todoTask.title)

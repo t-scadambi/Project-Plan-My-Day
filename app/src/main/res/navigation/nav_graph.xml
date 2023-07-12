@@ -22,6 +22,9 @@
         <action
             android:id="@+id/action_taskDisplayFragment_to_calendarDisplayFragment"
             app:destination="@id/calendarDisplayFragment" />
+        <action
+            android:id="@+id/action_taskDisplayFragment_to_homepageFragment"
+            app:destination="@id/homepageFragment" />
     </fragment>
     <fragment
         android:id="@+id/calendarDisplayFragment"
