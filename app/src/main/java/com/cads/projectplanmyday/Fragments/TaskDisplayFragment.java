@@ -20,7 +20,7 @@ import android.widget.Button;
 import com.android.volley.Response;
 import com.cads.projectplanmyday.ActivityViewModel;
 import com.cads.projectplanmyday.CalendarEvent;
-import com.cads.projectplanmyday.Event;
+import com.cads.projectplanmyday.timelineview.Event;
 import com.cads.projectplanmyday.MSGraphRepository;
 import com.cads.projectplanmyday.MainActivity;
 import com.cads.projectplanmyday.OpenAIHelper;

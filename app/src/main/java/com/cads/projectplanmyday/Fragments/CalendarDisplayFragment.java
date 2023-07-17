@@ -19,7 +19,7 @@ import android.widget.Button;
 import com.cads.projectplanmyday.ActivityViewModel;
 import com.cads.projectplanmyday.CalendarEvent;
 import com.cads.projectplanmyday.CalendarResponseAdapter;
-import com.cads.projectplanmyday.Event;
+import com.cads.projectplanmyday.timelineview.Event;
 import com.cads.projectplanmyday.OpenAIHelper;
 import com.cads.projectplanmyday.R;
 import com.cads.projectplanmyday.TaskPlanner;

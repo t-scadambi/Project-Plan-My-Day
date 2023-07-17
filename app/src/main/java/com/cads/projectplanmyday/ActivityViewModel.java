@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.cads.projectplanmyday.timelineview.Event;
 import com.microsoft.identity.client.IAccount;
 import com.microsoft.identity.client.ISingleAccountPublicClientApplication;
 
@@ -14,7 +15,7 @@ public class ActivityViewModel extends ViewModel {
     private MutableLiveData<ISingleAccountPublicClientApplication> singleAccountAppLiveData = new MutableLiveData<>();
     private MutableLiveData<IAccount> accountLiveData = new MutableLiveData<>();
 
-    private MutableLiveData<List<Event>> _openAIData = new MutableLiveData<>();
+    private MutableLiveData<List<com.cads.projectplanmyday.timelineview.Event>> _openAIData = new MutableLiveData<>();
 
     private MutableLiveData<List<TaskPlanner>> _tasks = new MutableLiveData<>();
     private MutableLiveData<List<CalendarEvent>> _events = new MutableLiveData<>();
@@ -25,7 +26,7 @@ public class ActivityViewModel extends ViewModel {
     public void setUserMessage(String message){
         userMessage.postValue(message);
     }
-    public void setOpenAIData(List<Event> openAIData){
+    public void setOpenAIData(List<com.cads.projectplanmyday.timelineview.Event> openAIData){
         _openAIData.postValue(openAIData);
     }
     public List<Event> getOpenAIData(){

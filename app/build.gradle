@@ -59,6 +59,6 @@ dependencies {
     implementation 'org.tensorflow:tensorflow-lite:+'
     implementation 'org.tensorflow:tensorflow-lite-select-tf-ops:+'
 //    implementation 'io.github.akri16:timelineview:1.0.0'
-    implementation project(':timelineview')
+//    implementation project(':timelineview')
 
 }

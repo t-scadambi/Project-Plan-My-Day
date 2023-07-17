@@ -11,7 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.Navigation
 import com.cads.projectplanmyday.ActivityViewModel
-import com.cads.projectplanmyday.Event
+import com.cads.projectplanmyday.timelineview.Event
 import com.cads.projectplanmyday.R
 import com.cads.projectplanmyday.ReadWriteHandler
 import com.cads.projectplanmyday.databinding.FragmentOpenaiResponseBinding

@@ -13,6 +13,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.cads.projectplanmyday.timelineview.Event;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -146,8 +147,8 @@ public class OpenAIHelper {
         return op;
     }
 
-    public List<Event> formatEventList(JSONObject jsonObject){
-        List<Event> eventResponse = new ArrayList<>();
+    public List<com.cads.projectplanmyday.timelineview.Event> formatEventList(JSONObject jsonObject){
+        List<com.cads.projectplanmyday.timelineview.Event> eventResponse = new ArrayList<>();
         try{
             String dateToday = jsonObject.getString("date");
             JSONArray taskObjects = jsonObject.getJSONArray("tasks");
@@ -156,7 +157,7 @@ public class OpenAIHelper {
                 JSONObject task = taskObjects.getJSONObject(i);
                 long startTime = convertTimeStringToTimestamp(dateToday, task.getString("start time"));
                 long endTime = convertTimeStringToTimestamp(dateToday, task.getString("end time"));
-                Event ev = new Event(task.getString("title"), startTime,endTime );
+                com.cads.projectplanmyday.timelineview.Event ev = new com.cads.projectplanmyday.timelineview.Event(task.getString("title"), startTime,endTime );
                 eventResponse.add(ev);
             }
             for (int i = 0; i < eventObjects.length(); i++) {
@@ -164,7 +165,7 @@ public class OpenAIHelper {
 
                 long startTime = convertTimeStringToTimestamp(dateToday, event.getString("start time"));
                 long endTime = convertTimeStringToTimestamp(dateToday, event.getString("end time"));
-                Event ev = new Event(event.getString("event title"), startTime, endTime);
+                com.cads.projectplanmyday.timelineview.Event ev = new Event(event.getString("event title"), startTime, endTime);
                 eventResponse.add(ev);
             }
         }catch (Exception e){
