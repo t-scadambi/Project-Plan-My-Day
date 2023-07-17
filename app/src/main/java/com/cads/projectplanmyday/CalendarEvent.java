@@ -70,8 +70,10 @@ public class CalendarEvent implements Serializable {
         // Format LocalDateTime object to IST format string using istStart.format(istFormatter)
 
         String info = "Event: "+ getSubject()+"\n";
-        info += "Start time: " + istStart.format(istFormatter) +"\n";
-        info+="End time: "+istEnd.format(istFormatter);
+        info += "Start time: " + getStart_time()+"\n";
+        info+="End time: "+getEnd_time();
+//        info += "Start time: " + istStart.format(istFormatter) +"\n";
+//        info+="End time: "+istEnd.format(istFormatter);
         return info;
     }
 }

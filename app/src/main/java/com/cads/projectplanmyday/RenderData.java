@@ -117,7 +117,7 @@ public class RenderData implements TextClassifierHelper.ClassifierListener {
     }
 
     @Override
-    public void onLossResults(float lossNumber) {
+    public void onLossResults(String lossNumber) {
         textClassifierHelper.close();
     }
 }

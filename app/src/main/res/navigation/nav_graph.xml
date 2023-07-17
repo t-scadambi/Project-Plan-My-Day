@@ -7,16 +7,19 @@
 
     <fragment
         android:id="@+id/homepageFragment"
-        android:name="com.cads.projectplanmyday.HomepageFragment"
+        android:name="com.cads.projectplanmyday.Fragments.HomepageFragment"
         android:label="fragment_homepage"
         tools:layout="@layout/fragment_homepage" >
         <action
             android:id="@+id/action_homepageFragment_to_taskDisplayFragment"
             app:destination="@id/taskDisplayFragment" />
+        <action
+            android:id="@+id/action_homepageFragment_to_calendarFragment"
+            app:destination="@id/calendarFragment" />
     </fragment>
     <fragment
         android:id="@+id/taskDisplayFragment"
-        android:name="com.cads.projectplanmyday.TaskDisplayFragment"
+        android:name="com.cads.projectplanmyday.Fragments.TaskDisplayFragment"
         android:label="fragment_task_display"
         tools:layout="@layout/fragment_task_display" >
         <action
@@ -25,10 +28,47 @@
         <action
             android:id="@+id/action_taskDisplayFragment_to_homepageFragment"
             app:destination="@id/homepageFragment" />
+        <action
+            android:id="@+id/action_taskDisplayFragment_to_openaiResponseFragment"
+            app:destination="@id/openaiResponseFragment" />
     </fragment>
     <fragment
         android:id="@+id/calendarDisplayFragment"
-        android:name="com.cads.projectplanmyday.CalendarDisplayFragment"
+        android:name="com.cads.projectplanmyday.Fragments.CalendarDisplayFragment"
         android:label="fragment_calendar_display"
-        tools:layout="@layout/fragment_calendar_display" />
+        tools:layout="@layout/fragment_calendar_display" >
+        <action
+            android:id="@+id/action_calendarDisplayFragment_to_generationFragment"
+            app:destination="@id/generationFragment" />
+        <action
+            android:id="@+id/action_calendarDisplayFragment_to_openaiResponseFragment"
+            app:destination="@id/openaiResponseFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/openaiResponseFragment"
+        android:name="com.cads.projectplanmyday.Fragments.OpenaiResponseFragment"
+        android:label="fragment_openai_response"
+        tools:layout="@layout/fragment_openai_response" >
+        <action
+            android:id="@+id/action_openaiResponseFragment_to_homepageFragment"
+            app:destination="@id/homepageFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/generationFragment"
+        android:name="com.cads.projectplanmyday.Fragments.GenerationFragment"
+        android:label="fragment_generation"
+        tools:layout="@layout/fragment_generation" >
+        <action
+            android:id="@+id/action_generationFragment_to_homepageFragment"
+            app:destination="@id/homepageFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/calendarFragment"
+        android:name="com.cads.projectplanmyday.Fragments.CalendarFragment"
+        android:label="fragment_calendar"
+        tools:layout="@layout/fragment_calendar" >
+        <action
+            android:id="@+id/action_calendarFragment_to_homepageFragment"
+            app:destination="@id/homepageFragment" />
+    </fragment>
 </navigation>

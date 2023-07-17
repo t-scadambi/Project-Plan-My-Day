@@ -4,95 +4,104 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".HomepageFragment">
+    android:background="@color/colorOnPrimaryLight"
+    tools:context=".Fragments.HomepageFragment">
 
-    <LinearLayout
-        android:id="@+id/linearLayout"
+
+    <ImageButton
+        android:id="@+id/viewCalendar_btn"
+        android:layout_width="56dp"
+        android:layout_height="53dp"
+        android:background="@color/colorOnPrimary"
+        android:saveEnabled="false"
+        android:src="@drawable/dayview"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.954"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.023" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/sign_in_btn"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingTop="5dp"
-        android:paddingBottom="5dp"
-        android:weightSum="10"
-        app:layout_constraintBottom_toTopOf="@+id/plan_btn"
+        android:background="@color/colorOnPrimary"
+        android:focusable="auto"
+        android:text="Sign in"
+        android:textAlignment="center"
+        android:textAllCaps="false"
+        android:textColor="#5B5FC7"
+        android:textSize="16sp"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.052">
+        app:layout_constraintVertical_bias="0.906" />
 
-        <TextView
-            android:id="@+id/tvuser"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="5dp"
-            android:paddingEnd="10dp"
-            android:text="Signed-in user"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/current_user"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:padding="5dp"
-            android:paddingLeft="10dp"
-            android:text="None" />
-    </LinearLayout>
-
-    <TextView
-        android:id="@+id/tvdescription"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Click on the button for us to help you plan your day!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.623"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/plan_btn"
-        app:layout_constraintVertical_bias="0.024" />
-
-    <Button
-        android:id="@+id/sign_in_btn"
-        style="@android:style/Widget.Holo.Button.Small"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="48dp"
-        android:text="Sign in"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/sign_out_btn"
-        app:layout_constraintHorizontal_bias="0.383"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/sign_out_btn"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/sign_out_btn"
-        style="@android:style/Widget.Holo.Button.Small"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:background="@color/colorOnPrimary"
         android:enabled="false"
         android:text="Sign out"
+        android:textColor="#5B5FC7"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.804"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.101" />
+        app:layout_constraintVertical_bias="0.906" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/plan_btn"
-        style="@android:style/Widget.Holo.Button.Small"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_margin="25dp"
+        android:background="@drawable/rounded_btn"
         android:ellipsize="none"
         android:enabled="false"
+        android:padding="10dp"
         android:text="Plan My Day"
+        android:textAllCaps="false"
+        android:textColor="@color/colorOnPrimary"
         android:textSize="20sp"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.311" />
+        app:layout_constraintVertical_bias="0.594" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="176dp"
+        android:layout_height="234dp"
+        android:src="@drawable/image"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.193" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:text="Identify tasks from todo and generate calendar"
+        android:textAlignment="center"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@+id/plan_btn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView"
+        app:layout_constraintVertical_bias="0.25" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

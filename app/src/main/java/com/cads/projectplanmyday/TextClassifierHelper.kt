@@ -30,14 +30,12 @@ class TextClassifierHelper(private val context: Context, private val classifierL
     private val lock = Any()
     private var maxlen: Int = 0 // will be inferred from TF Lite model.
     private val handler = Handler(Looper.getMainLooper())
-    private val mappedSentences : MutableList<IntArray> = mutableListOf()
-    private val labels : MutableList<IntArray> = mutableListOf()
     private var wordIndexMap :Map<String,Int>? = null
     init {
         if (setupModelPersonalization()) {
             wordIndexMap = readWordIndexMappingFromAssets(context ,"tokenizer.json")
             maxlen = interpreter!!.getInputTensor(0).shape()[1]
-//            Log.d(TAG, interpreter!!.getInputTensorFromSignature("x","train").numBytes().toString())
+            Log.d(TAG, interpreter!!.getInputTensorFromSignature("x","train").numBytes().toString())
         } else {
             classifierListener?.onError("TFLite failed to init.")
         }
@@ -55,9 +53,9 @@ class TextClassifierHelper(private val context: Context, private val classifierL
     private fun setupModelPersonalization(): Boolean {
         return try {
             val assetManager = context.assets
-            val modelFile = loadModelFile(assetManager, "model.tflite")
+            val modelFile = loadModelFile(assetManager, "model1.tflite")
             interpreter = Interpreter(modelFile)
-            restore()
+//            restore()
             true
         } catch (e: IOException) {
             classifierListener?.onError(
@@ -77,36 +75,23 @@ class TextClassifierHelper(private val context: Context, private val classifierL
         val declaredLength = fileDescriptor.declaredLength
         return fileChannel.map(FileChannel.MapMode.READ_ONLY, startOffset, declaredLength)
     }
-
-    fun addTasks(trainingData: List<TaskPlanner>){
-        mappedSentences.clear()
-        labels.clear()
-        val sentences :MutableList<String> = mutableListOf()
-        for(todoTask in trainingData){
-            sentences.add(todoTask.title)
-        }
-        val trainingLabels : MutableList<Boolean> = mutableListOf()
-        for(todoTask in trainingData){
-            trainingLabels.add(todoTask.isSelected)
-        }
-        mapSentencesToNumbers(sentences,wordIndexMap!!,maxlen)
-        getCorresLabels(trainingLabels)
-    }
-    fun getCorresLabels(trainingLabels: List<Boolean>){
-        var index=0
+    fun getCorresLabels(trainingLabels: List<Int>) :MutableList<IntArray>  {
+        val labels : MutableList<IntArray> = mutableListOf()
         for(isSelected in trainingLabels){
             val willDo  = when(isSelected){
-                true -> listOf<Int>(1)
+                1 -> listOf<Int>(1)
                 else -> listOf(0)
             }
             labels.add(willDo.toIntArray())
         }
+        return labels
     }
     fun mapSentencesToNumbers(
         sentences: List<String>,
         wordIndexMap: Map<String, Int>,
         maxLen: Int
-    ) {
+    ) : MutableList<IntArray>{
+        val mappedSentences :MutableList<IntArray>  = mutableListOf()
         for (sentence in sentences) {
             val words = sentence.split(" ")
             val mappedWords = words.map { wordIndexMap.getOrDefault(it, 0) }
@@ -116,6 +101,7 @@ class TextClassifierHelper(private val context: Context, private val classifierL
             }
             mappedSentences.add(paddedWords.toIntArray())
         }
+        return mappedSentences
     }
     fun readWordIndexMappingFromAssets(context: Context, fileName: String): Map<String, Int> {
         val jsonString = context.assets.open(fileName).bufferedReader().use {
@@ -129,17 +115,19 @@ class TextClassifierHelper(private val context: Context, private val classifierL
         }
         return wordIndexMap
     }
-    fun startTraining(){
+    fun startTraining(sentences:List<String> , sentenceLabels:List<Int>){
         if (interpreter == null) {
             setupModelPersonalization()
         }
+        val mappedSentences = mapSentencesToNumbers(sentences,wordIndexMap!!,maxlen)
+        val labels = getCorresLabels(sentenceLabels)
         executor = Executors.newSingleThreadExecutor()
         executor?.execute{
             synchronized(lock){
                 val loss = training(mappedSentences, labels)
                 Log.d(TAG, loss)
                 handler.post {
-                    classifierListener?.onLossResults(1f)
+                    classifierListener?.onLossResults(loss)
                 }
             }
         }
@@ -187,8 +175,7 @@ class TextClassifierHelper(private val context: Context, private val classifierL
         }
     }
      fun classify(sentences :List<String>) {
-         mappedSentences.clear()
-         mapSentencesToNumbers(sentences,wordIndexMap!!,maxlen)
+        val mappedSentences = mapSentencesToNumbers(sentences,wordIndexMap!!,maxlen)
         synchronized(lock) {
             if (interpreter == null) {
                 setupModelPersonalization()
@@ -221,7 +208,7 @@ class TextClassifierHelper(private val context: Context, private val classifierL
     interface ClassifierListener {
         fun onError(error: String)
         fun onResults(results: List<Float>?, inferenceTime: Long)
-        fun onLossResults(lossNumber: Float)
+        fun onLossResults(lossNumber: String)
     }
     companion object {
         private const val TAG = "TextClassifier"

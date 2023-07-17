@@ -4,16 +4,18 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.akribase.timelineview.Event;
 import com.microsoft.identity.client.IAccount;
 import com.microsoft.identity.client.ISingleAccountPublicClientApplication;
 
 import java.util.List;
 
 public class ActivityViewModel extends ViewModel {
+    public MutableLiveData<String> userMessage = new MutableLiveData<>("An error occured! :(");
     private MutableLiveData<ISingleAccountPublicClientApplication> singleAccountAppLiveData = new MutableLiveData<>();
     private MutableLiveData<IAccount> accountLiveData = new MutableLiveData<>();
 
-    private MutableLiveData<String> _openAIData = new MutableLiveData<>("Generating...");
+    private MutableLiveData<List<Event>> _openAIData = new MutableLiveData<>();
 
     private MutableLiveData<List<TaskPlanner>> _tasks = new MutableLiveData<>();
     private MutableLiveData<List<CalendarEvent>> _events = new MutableLiveData<>();
@@ -21,9 +23,14 @@ public class ActivityViewModel extends ViewModel {
         return _tasks.getValue();
     }
     public List<CalendarEvent> getEvents(){return _events.getValue();}
-    public LiveData<String> get_openAIData(){return _openAIData;}
-    public void setOpenAIData(String openAIData){
-        _openAIData.setValue(openAIData);
+    public void setUserMessage(String message){
+        userMessage.postValue(message);
+    }
+    public void setOpenAIData(List<Event> openAIData){
+        _openAIData.postValue(openAIData);
+    }
+    public List<Event> getOpenAIData(){
+        return _openAIData.getValue();
     }
     public void setTaskResponses(List<TaskPlanner> tasks){
         _tasks.setValue(tasks);
