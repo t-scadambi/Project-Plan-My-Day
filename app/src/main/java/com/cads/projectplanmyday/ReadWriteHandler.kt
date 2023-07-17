@@ -3,15 +3,10 @@ package com.cads.projectplanmyday
 import android.content.Context
 import android.os.Build
 import androidx.annotation.RequiresApi
-import com.akribase.timelineview.Event
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import java.io.BufferedWriter
 import java.io.File
-import java.io.FileWriter
 import java.io.IOException
-import java.nio.file.Files
-import java.nio.file.Paths
 
 @RequiresApi(Build.VERSION_CODES.O)
 object ReadWriteHandler {

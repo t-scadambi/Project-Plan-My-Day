@@ -11,7 +11,7 @@
         android:overScrollMode="never"
         tools:context=".TimelineFragment">
 
-        <com.akribase.timelineview.TimelineView
+        <com.cads.projectplanmyday.TimelineView
             android:id="@+id/timeline_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

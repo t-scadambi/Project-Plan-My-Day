@@ -16,11 +16,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-
-import com.akribase.timelineview.Event;
 import com.cads.projectplanmyday.ActivityViewModel;
 import com.cads.projectplanmyday.CalendarEvent;
 import com.cads.projectplanmyday.CalendarResponseAdapter;
+import com.cads.projectplanmyday.Event;
 import com.cads.projectplanmyday.OpenAIHelper;
 import com.cads.projectplanmyday.R;
 import com.cads.projectplanmyday.TaskPlanner;

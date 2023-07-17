@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
-import com.akribase.timelineview.Event
+import com.cads.projectplanmyday.Event
 import com.cads.projectplanmyday.R
 import com.cads.projectplanmyday.ReadWriteHandler
 import com.cads.projectplanmyday.databinding.FragmentCalendarBinding

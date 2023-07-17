@@ -10,19 +10,11 @@ import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.Navigation
-import com.akribase.timelineview.Event
 import com.cads.projectplanmyday.ActivityViewModel
+import com.cads.projectplanmyday.Event
 import com.cads.projectplanmyday.R
 import com.cads.projectplanmyday.ReadWriteHandler
 import com.cads.projectplanmyday.databinding.FragmentOpenaiResponseBinding
-import com.google.android.material.snackbar.Snackbar
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
-import java.io.BufferedWriter
-import java.io.FileWriter
-import java.io.IOException
-import java.nio.file.Files
-import java.nio.file.Paths
 
 @RequiresApi(Build.VERSION_CODES.O)
 class OpenaiResponseFragment : Fragment() {

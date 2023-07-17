@@ -17,10 +17,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import com.akribase.timelineview.Event;
 import com.android.volley.Response;
 import com.cads.projectplanmyday.ActivityViewModel;
 import com.cads.projectplanmyday.CalendarEvent;
+import com.cads.projectplanmyday.Event;
 import com.cads.projectplanmyday.MSGraphRepository;
 import com.cads.projectplanmyday.MainActivity;
 import com.cads.projectplanmyday.OpenAIHelper;
