@@ -18,8 +18,8 @@
             android:paddingTop="16dp"
             android:splitMotionEvents="false"
             app:backgroundColor="@color/colorOnPrimaryLight"
-            app:eventBackground="@color/primaryPurple"
-            app:eventNameColor="@color/colorOnPrimary"
+            app:eventBackground="#5B5FC7"
+            app:eventNameColor="@color/black"
             app:eventTimeColor="@color/colorOnPrimaryLight"
             app:labelColor="@color/lightGrey"
             app:startLabel="7" />

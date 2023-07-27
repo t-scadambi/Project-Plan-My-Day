@@ -171,10 +171,17 @@ class TimelineView @JvmOverloads constructor(
         for (item in timeLineItems) {
             val binding  = EventViewBinding.inflate(LayoutInflater.from(context))
             binding.event = item
-            binding.cardView.setCardBackgroundColor(eventBg)
+            if(item.bgid==1){
+                eventBg = resources.getColor(R.color.taskColor)
+                binding.cardView.setCardBackgroundColor(eventBg)
+            }
+            else{
+                eventBg = resources.getColor(R.color.eventColor)
+                binding.cardView.setCardBackgroundColor(eventBg)
+            }
             binding.constrained = true
             binding.eventName.setTextColor(eventNameColor)
-            binding.eventTime.setTextColor(eventTimeColor)
+//            binding.eventTime.setTextColor(eventTimeColor)
 
             timelineItemViews.add(binding.root)
 

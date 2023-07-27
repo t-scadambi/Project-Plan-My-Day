@@ -270,16 +270,17 @@ public class HomepageFragment extends Fragment {
 
             // Get end of the day date and time
             LocalDateTime endOfDayDateTime = LocalDateTime.of(currentDateTime.toLocalDate(), LocalTime.from(LocalDateTime.MAX));
-
+            LocalDateTime startofTheDay = LocalDateTime.of(currentDateTime.toLocalDate(),LocalTime.from(LocalDateTime.MIN));
             // Define ISO date-time formatter
             DateTimeFormatter isoFormatter = DateTimeFormatter.ISO_DATE_TIME;
 
             // Convert current date and time to ISO format
             String currentDateTimeIso = currentDateTime.format(isoFormatter);
+            String startofTheDayIso = startofTheDay.format(isoFormatter);
 
             // Convert end of the day date and time to ISO format
             String endOfDayDateTimeIso = endOfDayDateTime.format(isoFormatter);
-            String dateInfo = "?startdatetime="+currentDateTimeIso+"&enddatetime="+endOfDayDateTimeIso;
+            String dateInfo = "?startdatetime="+startofTheDayIso+"&enddatetime="+endOfDayDateTimeIso;
             Log.d(TAG,"DATE INFO"+dateInfo);
             String requestUrl = calendarUrl + dateInfo + filters;
             msGraphRepository.callGraphAPIUsingVolley(

@@ -8,14 +8,16 @@ internal data class EventI(
     val name: String,
     val startIndex: Float,
     val endIndex: Float,
-    val disp: String
+    val disp: String,
+    val bgid:Int
 ) {
 
     constructor(event: Event, start: Int): this(
         event.name,
         getHourIndex(event.startTime, start),
         getHourIndex(event.endTime, start),
-        "${convertUnixToString(event.startTime)} - ${convertUnixToString(event.endTime)}"
+        "${convertUnixToString(event.startTime)} - ${convertUnixToString(event.endTime)}",
+        event.bgid
     )
 
     companion object {

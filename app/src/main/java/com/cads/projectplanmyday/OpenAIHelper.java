@@ -157,7 +157,7 @@ public class OpenAIHelper {
                 JSONObject task = taskObjects.getJSONObject(i);
                 long startTime = convertTimeStringToTimestamp(dateToday, task.getString("start time"));
                 long endTime = convertTimeStringToTimestamp(dateToday, task.getString("end time"));
-                com.cads.projectplanmyday.timelineview.Event ev = new com.cads.projectplanmyday.timelineview.Event(task.getString("title"), startTime,endTime );
+                com.cads.projectplanmyday.timelineview.Event ev = new com.cads.projectplanmyday.timelineview.Event(task.getString("title"), startTime,endTime,1 );
                 eventResponse.add(ev);
             }
             for (int i = 0; i < eventObjects.length(); i++) {
@@ -165,7 +165,7 @@ public class OpenAIHelper {
 
                 long startTime = convertTimeStringToTimestamp(dateToday, event.getString("start time"));
                 long endTime = convertTimeStringToTimestamp(dateToday, event.getString("end time"));
-                com.cads.projectplanmyday.timelineview.Event ev = new Event(event.getString("event title"), startTime, endTime);
+                com.cads.projectplanmyday.timelineview.Event ev = new Event(event.getString("event title"), startTime, endTime,2);
                 eventResponse.add(ev);
             }
         }catch (Exception e){

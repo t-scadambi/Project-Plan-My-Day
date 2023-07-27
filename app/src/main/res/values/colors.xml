@@ -13,4 +13,6 @@
     <color name="lightGrey">#404040</color>
     <color name="colorBackground">#16171B</color>
     <color name="primaryPurple">#5868FF</color>
+    <color name="taskColor">#e7f2da</color>
+    <color name="eventColor">#e3f5ff</color>
 </resources>
