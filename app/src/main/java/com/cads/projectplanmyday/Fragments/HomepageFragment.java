@@ -145,7 +145,8 @@ public class HomepageFragment extends Fragment {
             if(mSingleAccountApp==null){
                 return;
             }
-
+            planDayButton.setEnabled(false);
+            Toast.makeText(getContext(),"Getting tasks!",Toast.LENGTH_SHORT).show();
             mSingleAccountApp.acquireTokenSilentAsync(getScopes(),mAccount.getAuthority(),getAuthSilentCallback());
             viewModel.setSingleAccountApp(mSingleAccountApp);
         });
@@ -317,11 +318,13 @@ public class HomepageFragment extends Fragment {
         List<TaskPlanner> datalist =graphData.renderTaskInfo();
         viewModel.setTaskResponses(datalist);
         // TODO navigate to calendar events
+        planDayButton.setEnabled(true);
         Navigation.findNavController(getView()).navigate(R.id.action_homepageFragment_to_taskDisplayFragment);
     }
 
     private void displayError(@NonNull final Exception exception) {
         //TODO
+        planDayButton.setEnabled(true);
     }
 
     private void updateUI() {

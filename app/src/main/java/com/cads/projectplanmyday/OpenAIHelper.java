@@ -36,7 +36,7 @@ public class OpenAIHelper {
         private final String openAIResourceUrl = "https://planmydayopenai.openai.azure.com/openai/deployments/ChatBot-turbo35/chat/completions?api-version=2023-03-15-preview";
 //    private final String openAIResourceUrl = "https://planmydayopenai.openai.azure.com/openai/deployments/Davinci03/completions?api-version=2022-12-01";
 
-    private final String accessToken = "52e1aec1153a4d78921b1180c6ecefc1";
+    private final String accessToken = "OPENAI_KEY";
 
     public void getResponse(@NonNull final Context context,
                             @NonNull final Response.Listener<JSONObject> responseListener,
